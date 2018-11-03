@@ -31,22 +31,23 @@ public class Tablero extends JPanel implements ActionListener {
     private boolean ingame = false;
     private boolean dying = false;
 
-    private final int blocksize = 24;
-    private final int nrofblocks = 15;
-    private final int scrsize = nrofblocks * blocksize;
-    private final int pacanimdelay = 2;
-    private final int pacmananimcount = 4;
+    private final int blocksize = 24;   //tamaño en pixeles de los bloques
+    private final int nrofblocks = 15;  //cantidad de bloques - EJE X y EJE Y
+    private final int scrsize = nrofblocks * blocksize; //tamaño pantalla = 360
+    private final int pacanimdelay = 2; //delay animacion Pacman 
+    private final int pacmananimcount = 4;  //cantidad animaciones Pacman
     private final int maxghosts = 12;
-    private final int pacmanspeed = 6;
+    private final int pacmanspeed = 6;  //velocidad del Pacman
 
-    private int pacanimcount = pacanimdelay;
+    private int pacanimcount = pacanimdelay;    //cantidad de animaciones = delay animacion Pacman
     private int pacanimdir = 1;
     private int pacmananimpos = 0;
     private int nrofghosts = 6;
     private int pacsleft, score;
     private int[] dx, dy;
-    private int[] ghostx, ghosty, ghostdx, ghostdy, ghostspeed;
-
+    private int[] ghostx, ghosty, ghostdx, ghostdy, ghostspeed; 
+    //primeras 2 variables (posicion sprite) - segundas 2 variables (cambios delta direccion horizontal y vertical)
+    
     private Image ghost;
     private Image pacman1, pacman2up, pacman2left, pacman2right, pacman2down;
     private Image pacman3up, pacman3down, pacman3left, pacman3right;
@@ -54,6 +55,11 @@ public class Tablero extends JPanel implements ActionListener {
 
     private int pacmanx, pacmany, pacmandx, pacmandy;
     private int reqdx, reqdy, viewdx, viewdy;
+    
+    //Significado nros Leveldata
+    //16 = punto / 1 = borde izquierdo / 2 = borde superior / 4 = borde derecha
+    //8 = borde inferior
+    //Ejemplo: 1er num = 19 (16 + 2 + 1) / 2do num = 26 (16 + 8 + 2)
 
     private final short leveldata[] = {
         19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22,
@@ -85,7 +91,7 @@ public class Tablero extends JPanel implements ActionListener {
         loadImages();
         initVariables();
 
-        addKeyListener(new TAdapter());
+        addKeyListener(new TAdapter()); //Se encarga de leer el boton del teclado
 
         setFocusable(true);
 
@@ -177,7 +183,7 @@ public class Tablero extends JPanel implements ActionListener {
         }
     }
 
-    private void checkMaze() {
+    private void checkMaze() {  //chequea si quedan puntos por comer
 
         short i = 0;
         boolean finished = true;
@@ -209,7 +215,7 @@ public class Tablero extends JPanel implements ActionListener {
 
     private void death() {//murio
 
-        pacsleft--;
+        pacsleft--; //cantidad de vidas
 
         if (pacsleft == 0) {
             ingame = false;
@@ -226,6 +232,7 @@ public class Tablero extends JPanel implements ActionListener {
 
         for (i = 0; i < nrofghosts; i++) {
             if (ghostx[i] % blocksize == 0 && ghosty[i] % blocksize == 0) {
+                //determinar la posicion del fantasma
                 pos = ghostx[i] / blocksize + nrofblocks * (int) (ghosty[i] / blocksize);
 
                 count = 0;
@@ -282,6 +289,7 @@ public class Tablero extends JPanel implements ActionListener {
             ghosty[i] = ghosty[i] + (ghostdy[i] * ghostspeed[i]);
             drawGhost(g2d, ghostx[i] + 1, ghosty[i] + 1);
 
+            //Si hay colision entre Ghost y Pacman, Pacman muere
             if (pacmanx > (ghostx[i] - 12) && pacmanx < (ghostx[i] + 12)
                     && pacmany > (ghosty[i] - 12) && pacmany < (ghosty[i] + 12)
                     && ingame) {
@@ -300,7 +308,8 @@ public class Tablero extends JPanel implements ActionListener {
 
         int pos;
         short ch;
-
+        
+        //reqdx y reqdy son de la clase TAdapter
         if (reqdx == -pacmandx && reqdy == -pacmandy) {
             pacmandx = reqdx;
             pacmandy = reqdy;
@@ -311,12 +320,13 @@ public class Tablero extends JPanel implements ActionListener {
         if (pacmanx % blocksize == 0 && pacmany % blocksize == 0) {
             pos = pacmanx / blocksize + nrofblocks * (int) (pacmany / blocksize);
             ch = screendata[pos];
-
+            
+            //Si Pacman come una galletita, se le suma un punto
             if ((ch & 16) != 0) {
                 screendata[pos] = (short) (ch & 15);
                 score++;
             }
-
+            
             if (reqdx != 0 || reqdy != 0) {
                 if (!((reqdx == -1 && reqdy == 0 && (ch & 1) != 0)
                         || (reqdx == 1 && reqdy == 0 && (ch & 4) != 0)
@@ -329,7 +339,7 @@ public class Tablero extends JPanel implements ActionListener {
                 }
             }
 
-            // Check for standstill
+            //Pacman se detiene si no puede seguir en la direccion que venia
             if ((pacmandx == -1 && pacmandy == 0 && (ch & 1) != 0)
                     || (pacmandx == 1 && pacmandy == 0 && (ch & 4) != 0)
                     || (pacmandx == 0 && pacmandy == -1 && (ch & 2) != 0)
@@ -494,8 +504,8 @@ public class Tablero extends JPanel implements ActionListener {
 
         for (i = 0; i < nrofghosts; i++) {
 
-            ghosty[i] = 4 * blocksize;
-            ghostx[i] = 4 * blocksize;
+            ghosty[i] = 4 * blocksize;  //posicion X inicio Ghosts
+            ghostx[i] = 4 * blocksize;  //posicion Y inicio Ghosts
             ghostdy[i] = 0;
             ghostdx[i] = dx;
             dx = -dx;
