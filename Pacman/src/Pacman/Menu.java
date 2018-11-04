@@ -17,6 +17,12 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         
+        
+        //Comentario de prueba
+        //
+        //
+        //Comentario de prueba 2
+        
         setTitle("Pacman");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(380, 420);
