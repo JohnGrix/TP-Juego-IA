@@ -29,8 +29,8 @@ public class MenuFondo extends JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
-        jp.paintComponents(g);
         
+        jp.paintComponents(g);
         showTitle(g);
     }
 
