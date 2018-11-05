@@ -1,20 +1,14 @@
 package Pacman;
 
+//Importa los metodos de la clase JFrame
 import javax.swing.JFrame;
 
+//Pacman hereda de JFrame
 public class Pacman extends JFrame {
-
+    
+    //Constructor
     public Pacman() {
-        initUI();
+        
     }
-
-    private void initUI() {
-
-        add(new Tablero());
-        setTitle("Pacman");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(380, 420);
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
+    
 }

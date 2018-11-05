@@ -585,29 +585,45 @@ public class Tablero extends JPanel implements ActionListener {
             int key = e.getKeyCode();
 
             if (ingame) {
+                
                 if (key == KeyEvent.VK_LEFT) {
+                    
                     reqdx = -1;
                     reqdy = 0;
+                    
                 } else if (key == KeyEvent.VK_RIGHT) {
+                    
                     reqdx = 1;
                     reqdy = 0;
+                    
                 } else if (key == KeyEvent.VK_UP) {
+                    
                     reqdx = 0;
                     reqdy = -1;
+                    
                 } else if (key == KeyEvent.VK_DOWN) {
+                    
                     reqdx = 0;
                     reqdy = 1;
+                    
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
+                    
                     ingame = false;
+                    
                 } else if (key == KeyEvent.VK_PAUSE) {
+                    
                     if (timer.isRunning()) {
+                        
                         timer.stop();
                     } else {
+                        
                         timer.start();
                     }
                 }
             } else {
+                
                 if (key == 's' || key == 'S') {
+                    
                     ingame = true;
                     initGame();
                 }
@@ -619,8 +635,7 @@ public class Tablero extends JPanel implements ActionListener {
 
             int key = e.getKeyCode();
 
-            if (key == Event.LEFT || key == Event.RIGHT
-                    || key == Event.UP || key == Event.DOWN) {
+            if (key == Event.LEFT || key == Event.RIGHT || key == Event.UP || key == Event.DOWN) {
                 reqdx = 0;
                 reqdy = 0;
             }

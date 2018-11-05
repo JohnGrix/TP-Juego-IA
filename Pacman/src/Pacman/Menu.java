@@ -81,8 +81,8 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
-        //Inicializa el juego llamando al constructor de la claase pacman
-        new Pacman().setVisible(true);
+        //Inicializa el juego llamando al constructor de la clase pacman
+        new Game().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ComenzarActionPerformed
 
