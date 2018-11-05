@@ -10,23 +10,23 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
-    
+    //Declaro variables
     private Image title;
     private Graphics2D g2d;
 
     public Menu() {
+        //Inicializa los componenestes del Frame
         initComponents();
         
-        
-        //Comentario de prueba
-        //
-        //
-        //Comentario de prueba 2
-        
+        //Setea el titulo
         setTitle("Pacman");
+        //Que se cierre el programa al cerrarse el frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Setea el tamaño
         setSize(380, 420);
+        
         setLocationRelativeTo(null);
+        //Pinta el fondo de negro
         setBackground(Color.BLACK);
     }
     
@@ -79,8 +79,9 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
+        //Inicializa el juego llamando al constructor de la claase pacman
         new Pacman().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ComenzarActionPerformed
