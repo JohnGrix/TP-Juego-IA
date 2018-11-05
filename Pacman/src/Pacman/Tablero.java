@@ -20,27 +20,29 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Tablero extends JPanel implements ActionListener {
-
-    private Dimension d;
-    private final Font smallfont = new Font("Helvetica", Font.BOLD, 14);
+    
+    //Dimensiones del jframe
+    private Dimension dimDimension;
+    //Fuente o tipo de letra/tamaño
+    private final Font fntFont = new Font("Helvetica", Font.BOLD, 14);
 
     private Image ii;
-    private final Color dotcolor = new Color(192, 192, 0);
-    private Color mazecolor;
+    private final Color clrDotColor = new Color(192, 192, 0);
+    private Color clrMazeColor;
 
-    private boolean ingame = false;
-    private boolean dying = false;
+    private boolean blnInGame = false;
+    private boolean blnDying = false;
 
-    private final int blocksize = 24;   //tamaño en pixeles de los bloques
-    private final int nrofblocks = 15;  //cantidad de bloques - EJE X y EJE Y
-    private final int scrsize = nrofblocks * blocksize; //tamaño pantalla = 360
-    private final int pacanimdelay = 2; //delay animacion Pacman 
-    private final int pacmananimcount = 4;  //cantidad animaciones Pacman
-    private final int maxghosts = 12;
-    private final int pacmanspeed = 6;  //velocidad del Pacman
+    private final int intCantPixelsBlockSize = 24;   //tamaño en pixeles de los bloques
+    private final int intCantBlocksXY = 15;  //cantidad de bloques - EJE X y EJE Y
+    private final int intScreenSize = intCantBlocksXY * intCantPixelsBlockSize; //tamaño pantalla = 360
+    private final int intPacManAnimDelay = 2; //delay animacion Pacman 
+    private final int intPacManCantAnim = 4;  //cantidad animaciones Pacman
+    private final int intMaxCantGhosts = 12;
+    private final int intPacManSpeed = 6;  //velocidad del Pacman
 
-    private int pacanimcount = pacanimdelay;    //cantidad de animaciones = delay animacion Pacman
-    private int pacanimdir = 1;
+    private int intPacCantAnim = intPacManAnimDelay;    //cantidad de animaciones = delay animacion Pacman
+    private int intPacManAnimDir = 1;
     private int pacmananimpos = 0;
     private int nrofghosts = 6;
     private int pacsleft, score;
@@ -101,14 +103,14 @@ public class Tablero extends JPanel implements ActionListener {
 
     private void initVariables() {
 
-        screendata = new short[nrofblocks * nrofblocks];
-        mazecolor = new Color(5, 100, 5);
-        d = new Dimension(400, 400);
-        ghostx = new int[maxghosts];
-        ghostdx = new int[maxghosts];
-        ghosty = new int[maxghosts];
-        ghostdy = new int[maxghosts];
-        ghostspeed = new int[maxghosts];
+        screendata = new short[intCantBlocksXY * intCantBlocksXY];
+        clrMazeColor = new Color(5, 100, 5);
+        dimDimension = new Dimension(400, 400);
+        ghostx = new int[intMaxCantGhosts];
+        ghostdx = new int[intMaxCantGhosts];
+        ghosty = new int[intMaxCantGhosts];
+        ghostdy = new int[intMaxCantGhosts];
+        ghostspeed = new int[intMaxCantGhosts];
         dx = new int[4];
         dy = new int[4];
 
@@ -125,21 +127,21 @@ public class Tablero extends JPanel implements ActionListener {
 
     private void doAnim() {
 
-        pacanimcount--;
+        intPacCantAnim--;
 
-        if (pacanimcount <= 0) {
-            pacanimcount = pacanimdelay;
-            pacmananimpos = pacmananimpos + pacanimdir;
+        if (intPacCantAnim <= 0) {
+            intPacCantAnim = intPacManAnimDelay;
+            pacmananimpos = pacmananimpos + intPacManAnimDir;
 
-            if (pacmananimpos == (pacmananimcount - 1) || pacmananimpos == 0) {
-                pacanimdir = -pacanimdir;
+            if (pacmananimpos == (intPacManCantAnim - 1) || pacmananimpos == 0) {
+                intPacManAnimDir = -intPacManAnimDir;
             }
         }
     }
 
     private void playGame(Graphics2D g2d) {
 
-        if (dying) {
+        if (blnDying) {
 
             death();
 
@@ -155,17 +157,17 @@ public class Tablero extends JPanel implements ActionListener {
     private void showIntroScreen(Graphics2D g2d) {
 
         g2d.setColor(new Color(0, 32, 48));
-        g2d.fillRect(50, scrsize / 2 - 30, scrsize - 100, 50);
+        g2d.fillRect(50, intScreenSize / 2 - 30, intScreenSize - 100, 50);
         g2d.setColor(Color.white);
-        g2d.drawRect(50, scrsize / 2 - 30, scrsize - 100, 50);
+        g2d.drawRect(50, intScreenSize / 2 - 30, intScreenSize - 100, 50);
 
         String s = "Presiona s para empezar.";
-        Font small = new Font("Helvetica", Font.BOLD, 15);
-        FontMetrics metr = this.getFontMetrics(small);
+        Font fntIntroScreenFont = new Font("Helvetica", Font.BOLD, 15);
+        FontMetrics metr = this.getFontMetrics(fntIntroScreenFont);
 
         g2d.setColor(Color.white);
-        g2d.setFont(small);
-        g2d.drawString(s, (scrsize - metr.stringWidth(s)) / 2, scrsize / 2);
+        g2d.setFont(fntIntroScreenFont);
+        g2d.drawString(s, (intScreenSize - metr.stringWidth(s)) / 2, intScreenSize / 2);
     }
 
     private void drawScore(Graphics2D g) {
@@ -173,13 +175,13 @@ public class Tablero extends JPanel implements ActionListener {
         int i;
         String s;
 
-        g.setFont(smallfont);
+        g.setFont(fntFont);
         g.setColor(new Color(96, 128, 255));
         s = "Score: " + score;
-        g.drawString(s, scrsize / 2 + 96, scrsize + 16);
+        g.drawString(s, intScreenSize / 2 + 96, intScreenSize + 16);
 
         for (i = 0; i < pacsleft; i++) {
-            g.drawImage(pacman3left, i * 28 + 8, scrsize + 1, this);
+            g.drawImage(pacman3left, i * 28 + 8, intScreenSize + 1, this);
         }
     }
 
@@ -188,7 +190,7 @@ public class Tablero extends JPanel implements ActionListener {
         short i = 0;
         boolean finished = true;
 
-        while (i < nrofblocks * nrofblocks && finished) {
+        while (i < intCantBlocksXY * intCantBlocksXY && finished) {
 
             if ((screendata[i] & 48) != 0) {
                 finished = false;
@@ -201,7 +203,7 @@ public class Tablero extends JPanel implements ActionListener {
 
             score += 50;
 
-            if (nrofghosts < maxghosts) {
+            if (nrofghosts < intMaxCantGhosts) {
                 nrofghosts++;
             }
 
@@ -218,7 +220,7 @@ public class Tablero extends JPanel implements ActionListener {
         pacsleft--; //cantidad de vidas
 
         if (pacsleft == 0) {
-            ingame = false;
+            blnInGame = false;
         }
 
         continueLevel();
@@ -231,9 +233,9 @@ public class Tablero extends JPanel implements ActionListener {
         int count;
 
         for (i = 0; i < nrofghosts; i++) {
-            if (ghostx[i] % blocksize == 0 && ghosty[i] % blocksize == 0) {
+            if (ghostx[i] % intCantPixelsBlockSize == 0 && ghosty[i] % intCantPixelsBlockSize == 0) {
                 //determinar la posicion del fantasma
-                pos = ghostx[i] / blocksize + nrofblocks * (int) (ghosty[i] / blocksize);
+                pos = ghostx[i] / intCantPixelsBlockSize + intCantBlocksXY * (int) (ghosty[i] / intCantPixelsBlockSize);
 
                 count = 0;
 
@@ -292,9 +294,9 @@ public class Tablero extends JPanel implements ActionListener {
             //Si hay colision entre Ghost y Pacman, Pacman muere
             if (pacmanx > (ghostx[i] - 12) && pacmanx < (ghostx[i] + 12)
                     && pacmany > (ghosty[i] - 12) && pacmany < (ghosty[i] + 12)
-                    && ingame) {
+                    && blnInGame) {
 
-                dying = true;
+                blnDying = true;
             }
         }
     }
@@ -317,8 +319,8 @@ public class Tablero extends JPanel implements ActionListener {
             viewdy = pacmandy;
         }
 
-        if (pacmanx % blocksize == 0 && pacmany % blocksize == 0) {
-            pos = pacmanx / blocksize + nrofblocks * (int) (pacmany / blocksize);
+        if (pacmanx % intCantPixelsBlockSize == 0 && pacmany % intCantPixelsBlockSize == 0) {
+            pos = pacmanx / intCantPixelsBlockSize + intCantBlocksXY * (int) (pacmany / intCantPixelsBlockSize);
             ch = screendata[pos];
             
             //Si Pacman come una galletita, se le suma un punto
@@ -348,8 +350,8 @@ public class Tablero extends JPanel implements ActionListener {
                 pacmandy = 0;
             }
         }
-        pacmanx = pacmanx + pacmanspeed * pacmandx;
-        pacmany = pacmany + pacmanspeed * pacmandy;
+        pacmanx = pacmanx + intPacManSpeed * pacmandx;
+        pacmany = pacmany + intPacManSpeed * pacmandy;
     }
 
     private void drawPacman(Graphics2D g2d) {
@@ -443,32 +445,32 @@ public class Tablero extends JPanel implements ActionListener {
         short i = 0;
         int x, y;
 
-        for (y = 0; y < scrsize; y += blocksize) {
-            for (x = 0; x < scrsize; x += blocksize) {
+        for (y = 0; y < intScreenSize; y += intCantPixelsBlockSize) {
+            for (x = 0; x < intScreenSize; x += intCantPixelsBlockSize) {
 
-                g2d.setColor(mazecolor);
+                g2d.setColor(clrMazeColor);
                 g2d.setStroke(new BasicStroke(2));
 
                 if ((screendata[i] & 1) != 0) {
-                    g2d.drawLine(x, y, x, y + blocksize - 1);
+                    g2d.drawLine(x, y, x, y + intCantPixelsBlockSize - 1);
                 }
 
                 if ((screendata[i] & 2) != 0) {
-                    g2d.drawLine(x, y, x + blocksize - 1, y);
+                    g2d.drawLine(x, y, x + intCantPixelsBlockSize - 1, y);
                 }
 
                 if ((screendata[i] & 4) != 0) {
-                    g2d.drawLine(x + blocksize - 1, y, x + blocksize - 1,
-                            y + blocksize - 1);
+                    g2d.drawLine(x + intCantPixelsBlockSize - 1, y, x + intCantPixelsBlockSize - 1,
+                            y + intCantPixelsBlockSize - 1);
                 }
 
                 if ((screendata[i] & 8) != 0) {
-                    g2d.drawLine(x, y + blocksize - 1, x + blocksize - 1,
-                            y + blocksize - 1);
+                    g2d.drawLine(x, y + intCantPixelsBlockSize - 1, x + intCantPixelsBlockSize - 1,
+                            y + intCantPixelsBlockSize - 1);
                 }
 
                 if ((screendata[i] & 16) != 0) {
-                    g2d.setColor(dotcolor);
+                    g2d.setColor(clrDotColor);
                     g2d.fillRect(x + 11, y + 11, 2, 2);
                 }
 
@@ -489,7 +491,7 @@ public class Tablero extends JPanel implements ActionListener {
     private void initLevel() {
 
         int i;
-        for (i = 0; i < nrofblocks * nrofblocks; i++) {
+        for (i = 0; i < intCantBlocksXY * intCantBlocksXY; i++) {
             screendata[i] = leveldata[i];
         }
 
@@ -504,8 +506,8 @@ public class Tablero extends JPanel implements ActionListener {
 
         for (i = 0; i < nrofghosts; i++) {
 
-            ghosty[i] = 4 * blocksize;  //posicion X inicio Ghosts
-            ghostx[i] = 4 * blocksize;  //posicion Y inicio Ghosts
+            ghosty[i] = 4 * intCantPixelsBlockSize;  //posicion X inicio Ghosts
+            ghostx[i] = 4 * intCantPixelsBlockSize;  //posicion Y inicio Ghosts
             ghostdy[i] = 0;
             ghostdx[i] = dx;
             dx = -dx;
@@ -518,15 +520,15 @@ public class Tablero extends JPanel implements ActionListener {
             ghostspeed[i] = validspeeds[random];
         }
 
-        pacmanx = 7 * blocksize;
-        pacmany = 11 * blocksize;
+        pacmanx = 7 * intCantPixelsBlockSize;
+        pacmany = 11 * intCantPixelsBlockSize;
         pacmandx = 0;
         pacmandy = 0;
         reqdx = 0;
         reqdy = 0;
         viewdx = -1;
         viewdy = 0;
-        dying = false;
+        blnDying = false;
     }
 
     private void loadImages() {
@@ -560,13 +562,13 @@ public class Tablero extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(Color.black);
-        g2d.fillRect(0, 0, d.width, d.height);
+        g2d.fillRect(0, 0, dimDimension.width, dimDimension.height);
 
         drawMaze(g2d);
         drawScore(g2d);
         doAnim();
 
-        if (ingame) {
+        if (blnInGame) {
             playGame(g2d);
         } else {
             showIntroScreen(g2d);
@@ -584,7 +586,7 @@ public class Tablero extends JPanel implements ActionListener {
 
             int key = e.getKeyCode();
 
-            if (ingame) {
+            if (blnInGame) {
                 
                 if (key == KeyEvent.VK_LEFT) {
                     
@@ -608,7 +610,7 @@ public class Tablero extends JPanel implements ActionListener {
                     
                 } else if (key == KeyEvent.VK_ESCAPE && timer.isRunning()) {
                     
-                    ingame = false;
+                    blnInGame = false;
                     
                 } else if (key == KeyEvent.VK_PAUSE) {
                     
@@ -624,7 +626,7 @@ public class Tablero extends JPanel implements ActionListener {
                 
                 if (key == 's' || key == 'S') {
                     
-                    ingame = true;
+                    blnInGame = true;
                     initGame();
                 }
             }
