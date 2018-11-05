@@ -1,23 +1,33 @@
 package Pacman;
 
+import java.awt.Component;
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
     //Declaro variables
+    private Image title;
+    private Graphics2D g2d;
 
     public Menu() {
         //Inicializa los componenestes del Frame
         initComponents();
+        
         //Setea el titulo
         setTitle("Pacman");
         //Que se cierre el programa al cerrarse el frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         //Setea el tamaño
         setSize(380, 420);
+        
         setLocationRelativeTo(null);
         //Pinta el fondo de negro
-        //setBackground(Color.BLACK);
-        //setForeground(Color.BLACK);
+        setBackground(Color.BLACK);
     }
     
     @SuppressWarnings("unchecked")
@@ -25,18 +35,12 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel = new javax.swing.JPanel();
-        Titulo = new javax.swing.JLabel();
         Comenzar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pacman");
-        setResizable(false);
+        setBackground(new java.awt.Color(51, 51, 51));
         setSize(new java.awt.Dimension(380, 420));
-
-        jPanel.setBackground(java.awt.Color.black);
-
-        Titulo.setIcon(new javax.swing.ImageIcon("D:\\Google Drive\\6to Año\\Programación sobre Redes\\TP - Juego IA\\Java2DPacmanGame-master\\src\\res\\title.png")); // NOI18N
 
         Comenzar.setText("Comenzar");
         Comenzar.addActionListener(new java.awt.event.ActionListener() {
@@ -45,35 +49,21 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(Titulo))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(Comenzar))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25))
+                .addGap(134, 134, 134)
+                .addComponent(Comenzar)
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(Titulo)
-                .addGap(76, 76, 76)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addContainerGap(291, Short.MAX_VALUE)
                 .addComponent(Comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(94, 94, 94))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,15 +111,13 @@ public class Menu extends javax.swing.JFrame {
         //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                new Menu().setVisible(true);       
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Comenzar;
-    private javax.swing.JLabel Titulo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
 }
